@@ -55,9 +55,6 @@ class NotificationHelper {
         }
     }
     
-    /**
-     * Mark all as read
-     */
     public function markAllAsRead() {
         try {
             return $this->pdo->exec("UPDATE notifications SET is_read = 1, read_at = NOW() WHERE is_read = 0");
@@ -130,4 +127,5 @@ class NotificationHelper {
         return date('M d, Y', $timestamp);
     }
 }
+
 ?>
