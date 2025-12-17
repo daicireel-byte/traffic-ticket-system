@@ -9,10 +9,7 @@ class NotificationHelper {
     public function __construct($pdo) {
         $this->pdo = $pdo;
     }
-    
-    /**
-     * Get unread notifications from database
-     */
+
     public function getUnreadNotifications($limit = 10) {
         try {
             $stmt = $this->pdo->prepare("
@@ -29,9 +26,6 @@ class NotificationHelper {
         }
     }
     
-    /**
-     * Get unread count
-     */
     public function getUnreadCount() {
         try {
             $stmt = $this->pdo->query("SELECT COUNT(*) FROM notifications WHERE is_read = 0");
@@ -42,9 +36,6 @@ class NotificationHelper {
         }
     }
     
-    /**
-     * Mark notification as read
-     */
     public function markAsRead($notificationId) {
         try {
             $stmt = $this->pdo->prepare("UPDATE notifications SET is_read = 1, read_at = NOW() WHERE id = ?");
@@ -64,9 +55,6 @@ class NotificationHelper {
         }
     }
     
-    /**
-     * Create new notification
-     */
     public function createNotification($notification_type, $title, $message, $related_id = null, $related_type = null) {
         try {
             $stmt = $this->pdo->prepare("
@@ -80,9 +68,6 @@ class NotificationHelper {
         }
     }
     
-    /**
-     * Get link based on related_type and related_id
-     */
     public function getNotificationLink($related_type, $related_id) {
         if (!$related_id) return '#';
         
@@ -98,9 +83,6 @@ class NotificationHelper {
         }
     }
     
-    /**
-     * Get icon based on notification type
-     */
     public function getNotificationIcon($notification_type) {
         $icons = [
             'NEW_TICKET' => '📝',
@@ -112,9 +94,6 @@ class NotificationHelper {
         return $icons[$notification_type] ?? '🔔';
     }
     
-    /**
-     * Format time ago
-     */
     public function getTimeAgo($datetime) {
         $timestamp = strtotime($datetime);
         $diff = time() - $timestamp;
@@ -127,5 +106,4 @@ class NotificationHelper {
         return date('M d, Y', $timestamp);
     }
 }
-
 ?>
