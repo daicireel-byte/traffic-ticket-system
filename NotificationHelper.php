@@ -9,7 +9,6 @@ class NotificationHelper {
     public function __construct($pdo) {
         $this->pdo = $pdo;
     }
-
     public function getUnreadNotifications($limit = 10) {
         try {
             $stmt = $this->pdo->prepare("
@@ -107,3 +106,4 @@ class NotificationHelper {
     }
 }
 ?>
+
